@@ -1,0 +1,168 @@
+<h2>Your Timetable</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Subject</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (timetable.length === 0) { %>
+    <tr>
+      <td colspan="5" style="text-align: center">No timetable entries yet.</td>
+    </tr>
+    <% } else { %> <% timetable.forEach(item => { %>
+    <tr>
+      <td><%= item.day %></td>
+      <td><%= item.subject %></td>
+      <td><%= item.start_time %></td>
+      <td><%= item.end_time %></td>
+      <td>
+        <form
+          action="/timetable/delete/<%= item.id %>"
+          method="POST"
+          style="display: inline"
+        >
+          <button type="submit" onclick="return confirm('Delete this entry?')">
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% }); %> <% } %>
+  </tbody>
+</table>
+
+<h3>Add New</h3>
+<form action="/timetable/add" method="POST">
+  <label for="day">Day:</label>
+  <select name="day" required>
+    <option value="">Select Day</option>
+    <option>Monday</option>
+    <option>Tuesday</option>
+    <option>Wednesday</option>
+    <option>Thursday</option>
+    <option>Friday</option>
+    <option>Saturday</option>
+    <option>Sunday</option>
+  </select>
+
+  <label for="subject">Subject:</label>
+  <input name="subject" placeholder="Subject" required />
+
+  <label for="start_time">Start Time:</label>
+  <input type="time" name="start_time" required />
+
+  <label for="end_time">End Time:</label>
+  <input type="time" name="end_time" required />
+
+  <button type="submit">Add</button>
+</form>
+
+<a href="/dashboard" class="back-btn">Back to Dashboard</a>
+
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  h2,
+  h3 {
+    color: #343a40;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+
+  th,
+  td {
+    border: 1px solid #dee2e6;
+    padding: 12px;
+    text-align: left;
+  }
+
+  th {
+    background: #007bff;
+    color: #fff;
+  }
+
+  tr:nth-child(even) {
+    background: #f1f1f1;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  label {
+    margin-top: 5px;
+    color: #555;
+  }
+
+  select,
+  input[type="text"],
+  input[type="time"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    margin-top: 12px;
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  button:hover {
+    background: #0056b3;
+  }
+
+  a {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+  .back-btn {
+    display: inline-block;
+    width: 95%;
+    background: #007bff;
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 30px;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+  }
+
+  .back-btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  }
+</style>

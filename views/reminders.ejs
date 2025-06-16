@@ -1,0 +1,169 @@
+<h2>Your Reminders</h2>
+
+<ul>
+  <% if (reminders.length === 0) { %>
+  <li class="empty">No reminders yet.</li>
+  <% } else { %> <% reminders.forEach(r => { %>
+  <li>
+    <div class="reminder-text">
+      <strong><%= r.title %></strong>
+      <span class="due">Due: <%= r.due_date.toISOString().slice(0,10) %></span>
+    </div>
+    <form
+      action="/reminders/delete/<%= r.id %>"
+      method="POST"
+      style="display: inline"
+    >
+      <button
+        type="submit"
+        class="delete-btn"
+        onclick="return confirm('Delete this reminder?')"
+      >
+        Delete
+      </button>
+    </form>
+  </li>
+  <% }); %> <% } %>
+</ul>
+
+<h3>Add New</h3>
+<form action="/reminders/add" method="POST">
+  <label for="title">Title:</label>
+  <input id="title" name="title" placeholder="Title" required />
+  <label for="due_date">Due Date:</label>
+  <input id="due_date" type="date" name="due_date" required />
+  <button type="submit" class="add-btn">Add</button>
+</form>
+
+<a href="/dashboard" class="back-btn">Back to Dashboard</a>
+
+<style>
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  }
+
+  h2,
+  h3 {
+    color: #343a40;
+    margin-bottom: 20px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    background: #ffffff;
+    margin-bottom: 15px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+
+  li:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+
+  li.empty {
+    text-align: center;
+    font-style: italic;
+    background: #f1f1f1;
+    border: none;
+  }
+
+  .reminder-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .due {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 4px;
+  }
+
+  form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  label {
+    margin: 8px 0 4px;
+    color: #555;
+  }
+
+  input[type="text"],
+  input[type="date"] {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s;
+  }
+
+  input[type="text"]:focus,
+  input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  button {
+    padding: 12px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background: #0056b3;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .delete-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+  }
+
+  .add-btn {
+    width: 95%;
+    align-self: center;
+  }
+
+  a.back-btn {
+    display: block;
+    width: 95%;
+    background: #007bff;
+    color: #fff !important;
+    padding: 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin: 30px auto 0;
+    text-align: center;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  }
+
+  a.back-btn:hover {
+    background: #0056b3;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transform: translateY(-2px);
+  }
+</style>
